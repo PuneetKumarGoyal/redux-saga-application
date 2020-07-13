@@ -7,7 +7,9 @@ function* getUsers() {
         const result = yield call(api.getUsers)
         yield put(actions.getUsersSuccess({ items: result.data.data }))
     } catch (e) {
-
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to get the users'
+        }));
     }
 }
 
@@ -16,7 +18,9 @@ function* createUser(action) {
         yield call(api.createUser, { firstName: action.payload.firstName, lastName: action.payload.lastName })
         yield call(getUsers)
     } catch (e) {
-
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to create the user'
+        }));
     }
 }
 
@@ -25,7 +29,10 @@ function* deleteUser({ id }) {
         yield call(api.deleteUser, id)
         yield call(getUsers)
     } catch (e) {
-
+        console.log('afasd')
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to delete the user'
+        }));
     }
 }
 
